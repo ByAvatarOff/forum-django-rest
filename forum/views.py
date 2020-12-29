@@ -1,9 +1,22 @@
-from rest_framework import generics, permissions, status, pagination
+from rest_framework import generics, permissions, status, pagination, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 
 from .serialazers import *
+
+
+class Like(APIView):
+
+    model = Posts
+    serializer_class = LikeDislikeSerializer
+    permission_classes = [permissions.IsAuthenticated, ]
+
+    def post(self, request, pk):
+        posts = Posts.objects.get(pk=pk)
+        posts.add_like()
+
+        return Response(status=status.HTTP_200_OK)
 
 
 class Logout(APIView):

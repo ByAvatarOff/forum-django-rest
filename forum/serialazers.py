@@ -36,19 +36,20 @@ class CreatePostsSerializer(serializers.ModelSerializer):
 
 class LikeDislikeSerializer(serializers.ModelSerializer):
     """Сериализатор для отображеня лайков и дизлайков"""
-    user = UserSerializer()
-    post = PostsSerializer()
 
     class Meta:
-        model = LikeDislike
-        fields = '__all__'
+        model = Posts
+        fields = ('like', 'add_like', )
 
 
 class CreateLikeDislikeSerializer(serializers.ModelSerializer):
     """Сериализатор для CRUD лайков и дизлайков"""
+    like_bool = serializers.BooleanField(label='Like')
+    dislike_bool = serializers.BooleanField(label='Dislike')
+
     class Meta:
-        model = LikeDislike
-        fields = '__all__'
+        model = Posts
+        fields = ('like_bool', 'dislike_bool', 'like_or_dislike', )
 
 
 class RecursiveSerializer(serializers.ModelSerializer):
