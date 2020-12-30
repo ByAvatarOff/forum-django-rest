@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions, status, pagination, viewsets
+from rest_framework import generics, permissions, status, pagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -14,7 +14,8 @@ class Like(APIView):
 
     def post(self, request, pk):
         posts = Posts.objects.get(pk=pk)
-        posts.add_like(request=request, post=posts)
+        is_like = request.POST.get("like_or_dislike")
+        posts.add_like(request=request, post=posts, is_like=is_like.lower())
         return Response(status=status.HTTP_200_OK)
 
 
@@ -115,17 +116,6 @@ class CommentsDestroyView(generics.DestroyAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
 
-class LikeDislikeCreateView(generics.CreateAPIView):
-    queryset = LikeDislike.objects.all()
-    serializer_class = CreateLikeDislikeSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
-
-class LikeDislikeListView(generics.ListAPIView):
-    queryset = LikeDislike.objects.all()
-    serializer_class = LikeDislikeSerializer
-
-
 class Stat(APIView):
     serializer_class = StatisticSerializer
     permission_classes = [permissions.IsAuthenticated, ]
@@ -134,5 +124,4 @@ class Stat(APIView):
     def post(self, request):
         statistic = Statistics()
         statistic.calculate_stat(request=request, )
-
         return Response(status=status.HTTP_200_OK)

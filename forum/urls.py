@@ -1,5 +1,4 @@
 from django.urls import path, include
-from rest_framework.authtoken.views import obtain_auth_token
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from .views import *
 
@@ -28,8 +27,6 @@ urlpatterns = [
     path('comments/update/<int:pk>/', CommentsUpdateView.as_view()),
     path('comments/destroy/<int:pk>/', CommentsDestroyView.as_view()),
 
-    path('like/create/', LikeDislikeCreateView.as_view()),
-    path('like/all/', LikeDislikeListView.as_view()),
     path('like/<int:pk>/', Like.as_view()),
     path('statistic/', Stat.as_view()),
 ]
