@@ -14,8 +14,7 @@ class Like(APIView):
 
     def post(self, request, pk):
         posts = Posts.objects.get(pk=pk)
-        posts.add_like()
-
+        posts.add_like(request=request, post=posts)
         return Response(status=status.HTTP_200_OK)
 
 
@@ -126,3 +125,14 @@ class LikeDislikeListView(generics.ListAPIView):
     queryset = LikeDislike.objects.all()
     serializer_class = LikeDislikeSerializer
 
+
+class Stat(APIView):
+    serializer_class = StatisticSerializer
+    permission_classes = [permissions.IsAuthenticated, ]
+    queryset = ''
+
+    def post(self, request):
+        statistic = Statistics()
+        statistic.calculate_stat(request=request, )
+
+        return Response(status=status.HTTP_200_OK)

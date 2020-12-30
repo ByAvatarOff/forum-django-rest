@@ -31,4 +31,5 @@ urlpatterns = [
     path('like/create/', LikeDislikeCreateView.as_view()),
     path('like/all/', LikeDislikeListView.as_view()),
     path('like/<int:pk>/', Like.as_view()),
+    path('statistic/', Stat.as_view()),
 ]

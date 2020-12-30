@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Posts, Category, LikeDislike, Comments
+from .models import Posts, Category, LikeDislike, Comments, Statistics
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -79,5 +79,12 @@ class CreateCommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comments
         fields = '__all__'
+
+
+class StatisticSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Statistics
+        fields = ('calculate_stat', )
 
 
